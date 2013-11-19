@@ -1,5 +1,19 @@
-apply plugin: 'war'
-apply plugin: 'jetty'
+apply plugin: 'fatjar'
+
+version = "0.0.1"
+
+buildscript {
+  dependencies {
+    classpath 'eu.appsatori:gradle-fatjar-plugin:0.1.2' // adds fatJar task
+  }
+  repositories {
+    mavenCentral()
+  }
+}
+
+dependencies {
+  compile 'com.github.sendgrid:sendgrid:0.1.0'
+}
 
 repositories {
   mavenCentral()
@@ -9,11 +23,24 @@ repositories {
   }
 }
 
-dependencies {
-  providedCompile 'javax.servlet:servlet-api:2.5'
-  compile 'com.github.sendgrid:sendgrid:0.1.0'
-  runtime 'javax.servlet:jstl:1.1.2'
+// adds 'with-dependencies' to the fatJar name
+fatJar {
+  classifier 'jar'
+  baseName "scottmotte"
+  manifest {
+    attributes("Implementation-Title": "SendgridJavaExample", "Implementation-Version": version)
+  }
 }
 
-/* Change context path (base url). otherwise defaults to name of project */
-jettyRunWar.contextPath = ''
+// copy fatJar to base project directory so they will be in git (and on github for download)
+build << {
+  copy {
+    println "Copying ${fatJar.archiveName} to $projectDir/repo/com/github/scottmotte/$version"
+    from("$buildDir/libs/${fatJar.archiveName}")
+    into("$projectDir/repo/com/github/scottmotte/$version")
+  }
+}
+
+artifacts {
+  archives fatJar
+}
