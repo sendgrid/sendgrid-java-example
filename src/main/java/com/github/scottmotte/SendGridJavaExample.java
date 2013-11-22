@@ -1,6 +1,7 @@
 package com.github.scottmotte;
 
 import java.lang.*;
+import java.io.File;
 import com.github.sendgrid.SendGrid;
 
 public class SendGridJavaExample {
@@ -19,6 +20,7 @@ public class SendGridJavaExample {
     sendgrid.setSubject("[sendgrid-java-example] Owl");
     sendgrid.setHtml("<strong>Owl are you doing?</strong>");
     sendgrid.setText("Owl are you doing?");
+    sendgrid.addFile(new File("./gif.gif"));
 
     String response = sendgrid.send();
     System.out.println(response);
