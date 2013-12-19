@@ -12,15 +12,11 @@ buildscript {
 }
 
 dependencies {
-  compile 'com.github.sendgrid:sendgrid:0.1.1'
+  compile 'com.sendgrid:sendgrid-java:0.1.2'
 }
 
 repositories {
   mavenCentral()
-  add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-    name = 'GitHub'
-    addArtifactPattern 'https://github.com/sendgrid/sendgrid-java/raw/v[revision]/repo/com/github/sendgrid/[revision]/sendgrid-[revision]-jar.jar'
-  }
 }
 
 // adds 'with-dependencies' to the fatJar name
