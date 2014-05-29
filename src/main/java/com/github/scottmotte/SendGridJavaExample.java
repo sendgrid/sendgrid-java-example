@@ -2,7 +2,7 @@ package com.github.scottmotte;
 
 import java.lang.*;
 import java.io.File;
-import com.github.sendgrid.SendGrid;
+import com.sendgrid.*;
 
 public class SendGridJavaExample {
   public static void main(String[] args) {
@@ -11,18 +11,22 @@ public class SendGridJavaExample {
     String to                 = System.getenv("TO");
 
     SendGrid sendgrid = new SendGrid(sendgrid_username, sendgrid_password);
+    SendGrid.Email email = new SendGrid.Email();
 
-    sendgrid.addTo(to);
-    sendgrid.addToName("Owl");
-    sendgrid.setFrom(to);
-    sendgrid.setFromName("Owl");
-    sendgrid.setReplyTo("no-reply@owl.com");
-    sendgrid.setSubject("[sendgrid-java-example] Owl");
-    sendgrid.setHtml("<strong>Owl are you doing?</strong>");
-    sendgrid.setText("Owl are you doing?");
+    email.addTo(to);
+    email.setFrom(to);
+    email.setFromName("Owl");
+    email.setReplyTo("no-reply@owl.com");
+    email.setSubject("[sendgrid-java-example] Owl");
+    email.setHtml("<strong>Owl are you doing?</strong>");
+    email.setText("Owl are you doing?");
     //sendgrid.addFile(new File("./gif.gif"));
 
-    String response = sendgrid.send();
-    System.out.println(response);
+    try {
+      SendGrid.Response response = sendgrid.send(email);
+      System.out.println(response.getMessage());
+    } catch (SendGridException e) {
+      System.out.println(e);
+    }
   }
 }
