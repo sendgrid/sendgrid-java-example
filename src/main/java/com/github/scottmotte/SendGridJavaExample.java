@@ -21,12 +21,8 @@ public class SendGridJavaExample {
     email.setHtml("<strong>Owl are you doing?</strong>");
     email.setText("Owl are you doing?");
 
-    try {
-      File file = new File("./gif.gif");
-      email.addAttachment(file, "owl.gif");
-    } catch (Exception e) {
-      System.out.println("File not found");
-    }
+    File file = new File("./gif.gif");
+    email.addAttachment("owl.gif", file);
 
 
     try {
