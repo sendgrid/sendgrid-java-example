@@ -9,7 +9,7 @@ public class SendGridJavaExample {
     String sendgrid_username  = System.getenv("SENDGRID_USERNAME");
     String sendgrid_password  = System.getenv("SENDGRID_PASSWORD");
     String to                 = System.getenv("TO");
-
+    System.out.println(sendgrid_username);
     SendGrid sendgrid = new SendGrid(sendgrid_username, sendgrid_password);
     SendGrid.Email email = new SendGrid.Email();
 
@@ -21,8 +21,8 @@ public class SendGridJavaExample {
     email.setHtml("<strong>Owl are you doing?</strong>");
     email.setText("Owl are you doing?");
 
-    File file = new File("./gif.gif");
-    email.addAttachment("owl.gif", file);
+    //File file = new File("./gif.gif");
+    //email.addAttachment("owl.gif", file);
 
 
     try {
